@@ -4,11 +4,12 @@
   "description": "Bhumi Foods — Premium Kerala Masala E-commerce",
   "private": true,
   "scripts": {
-    "dev": "echo 'Open index.html in a browser. No build step needed for development.'",
+    "dev": "serve . -l 3000",
     "build:css": "tailwindcss -i assets/css/input.css -o assets/css/tailwind.min.css --minify",
     "watch:css": "tailwindcss -i assets/css/input.css -o assets/css/tailwind.min.css --watch"
   },
   "devDependencies": {
+    "serve": "^14.2.8",
     "tailwindcss": "^3.4.0"
   },
   "notes": {
