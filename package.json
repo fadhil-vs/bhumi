@@ -1,0 +1,19 @@
+{
+  "name": "bhumi-foods",
+  "version": "1.0.0",
+  "description": "Bhumi Foods — Premium Kerala Masala E-commerce",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Open index.html in a browser. No build step needed for development.'",
+    "build:css": "tailwindcss -i assets/css/input.css -o assets/css/tailwind.min.css --minify",
+    "watch:css": "tailwindcss -i assets/css/input.css -o assets/css/tailwind.min.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "notes": {
+    "tailwind": "Currently using Tailwind CDN (play CDN) for development. Run 'pnpm build:css' for a production build.",
+    "supabase": "Configure js/config/supabase.js with your project URL and anon key before connecting to the database.",
+    "deploy": "Deploy the entire project root to Vercel or Netlify as a static site."
+  }
+}

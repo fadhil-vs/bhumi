@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factory Videos — Bhumi Foods Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'sage-light':'#F1F4E9','sage':'#DDE8D4','forest':'#214A36','cream':'#F4EBDD','beige':'#B7A078'},fontFamily:{heading:['"Playfair Display"','Georgia','serif'],body:['"DM Sans"','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Noto+Sans+Malayalam:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body class="bg-sage-light font-body antialiased">
+<div class="flex h-screen overflow-hidden">
+  <aside class="w-60 bg-forest flex-shrink-0 hidden md:flex flex-col">
+    <div class="px-5 py-6 border-b border-white/10"><a href="/admin/dashboard.html" class="flex items-center gap-2.5"><img src="/assets/images/logo.png" class="h-8 w-8 object-contain opacity-80" onerror="this.style.display='none'"><div><span class="block text-white font-heading text-sm font-semibold tracking-wider">BHUMI FOODS</span><span class="block text-white/40 text-[10px] uppercase tracking-widest">Admin</span></div></a></div>
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <a href="/admin/dashboard.html"      class="admin-sidebar-link">Dashboard</a>
+      <a href="/admin/products/index.html" class="admin-sidebar-link">Products</a>
+      <a href="/admin/categories.html"     class="admin-sidebar-link">Categories</a>
+      <a href="/admin/homepage.html"       class="admin-sidebar-link">Homepage</a>
+      <a href="/admin/videos.html"         class="admin-sidebar-link active" aria-current="page">Factory Videos</a>
+      <a href="/admin/orders.html"         class="admin-sidebar-link">Orders</a>
+      <a href="/admin/settings.html"       class="admin-sidebar-link">Settings</a>
+    </nav>
+    <div class="px-3 py-4 border-t border-white/10"><button id="logout-btn" class="admin-sidebar-link w-full text-left text-red-300 hover:text-red-200 hover:bg-red-900/20">Log Out</button></div>
+  </aside>
+
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <header class="bg-white border-b border-sage px-6 py-4 flex items-center justify-between flex-shrink-0">
+      <h1 class="font-heading text-xl text-forest font-normal">Factory Videos</h1>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6">
+
+      <!-- Instructions -->
+      <div class="admin-card bg-cream border-beige/30 mb-6">
+        <h2 class="font-semibold text-sm text-forest mb-2">📹 How to Upload Videos</h2>
+        <ol class="text-sm text-gray-600 space-y-1.5 leading-relaxed list-decimal pl-4">
+          <li>Download your Instagram Reels to MP4 format using any tool you prefer.</li>
+          <li>Upload the MP4 file for each production step below.</li>
+          <li>Add a title in English and Malayalam.</li>
+          <li>Optionally upload a thumbnail image (shown while the video loads).</li>
+          <li>Toggle "Active" to show or hide each video on the site.</li>
+        </ol>
+        <p class="text-xs text-gray-500 mt-3">Videos autoplay silently and loop — no controls shown to customers.</p>
+      </div>
+
+      <!-- 5 Video Slots -->
+      <div class="space-y-5" id="video-slots">
+        <!-- JS renders 5 slots, one per process step -->
+        <div class="text-sm text-gray-400 py-8 text-center">Loading…</div>
+      </div>
+
+      <template id="video-slot-template">
+        <div class="admin-card video-slot" data-step="">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center">
+                <span class="text-forest font-bold text-sm step-number"></span>
+              </div>
+              <div>
+                <h3 class="font-heading text-base text-forest font-normal step-title"></h3>
+                <p class="text-xs text-gray-500 step-sub"></p>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer" title="Active">
+              <input type="checkbox" name="is_active" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-forest"></div>
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Video upload -->
+            <div>
+              <label class="admin-label">Video File (MP4)</label>
+              <div class="video-drop-zone border-2 border-dashed border-sage rounded-sm p-5 text-center cursor-pointer hover:border-forest/40 transition-colors" role="button">
+                <div class="video-preview hidden mb-3">
+                  <video class="h-24 mx-auto rounded-sm" muted playsinline></video>
+                </div>
+                <div class="video-placeholder-label">
+                  <svg class="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  <p class="text-sm text-gray-500">Drop MP4 or <span class="text-forest underline">browse</span></p>
+                  <p class="text-xs text-gray-400 mt-0.5">Max 50MB</p>
+                </div>
+                <input type="file" accept="video/mp4,video/quicktime" class="video-file-input hidden">
+              </div>
+            </div>
+
+            <!-- Labels -->
+            <div class="space-y-3">
+              <div>
+                <label class="admin-label">Step Title (English)</label>
+                <input type="text" name="title_en" class="admin-input text-sm" placeholder="e.g. Ingredient Selection">
+              </div>
+              <div>
+                <label class="admin-label">Step Title (Malayalam)</label>
+                <input type="text" name="title_ml" class="admin-input text-sm font-ml" lang="ml" placeholder="ഉദാ. ചേരുവ തിരഞ്ഞെടുക്കൽ">
+              </div>
+              <button type="button" class="save-video-btn btn-forest rounded-sm text-xs py-2 px-4 w-full justify-center">
+                Save This Step
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </main>
+  </div>
+</div>
+<script type="module" src="/js/admin/videos-admin.js"></script>
+</body>
+</html>

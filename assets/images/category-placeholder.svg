@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#214A36" fill-opacity="0.85"/>
+  <rect x="0" y="0" width="400" height="300" fill="url(#grad)"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="400" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#214A36" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2d5a40" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <!-- Camera icon -->
+  <rect x="160" y="110" width="80" height="60" rx="6" stroke="#B7A078" stroke-opacity="0.4" stroke-width="2" fill="none"/>
+  <circle cx="200" cy="140" r="18" stroke="#B7A078" stroke-opacity="0.4" stroke-width="2" fill="none"/>
+  <circle cx="200" cy="140" r="8" fill="#B7A078" fill-opacity="0.3"/>
+  <text x="200" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="white" fill-opacity="0.4" font-style="italic">Category Image</text>
+  <text x="200" y="218" text-anchor="middle" font-family="Georgia, serif" font-size="9" fill="white" fill-opacity="0.25">Upload via admin panel</text>
+</svg>

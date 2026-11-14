@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Bhumi Foods Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'sage-light':'#F1F4E9','sage':'#DDE8D4','forest':'#214A36','cream':'#F4EBDD','beige':'#B7A078'},fontFamily:{heading:['"Playfair Display"','Georgia','serif'],body:['"DM Sans"','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body class="bg-sage-light font-body antialiased">
+<div class="flex h-screen overflow-hidden">
+  <aside class="w-60 bg-forest flex-shrink-0 hidden md:flex flex-col">
+    <div class="px-5 py-6 border-b border-white/10"><a href="/admin/dashboard.html" class="flex items-center gap-2.5"><img src="/assets/images/logo.png" class="h-8 w-8 object-contain opacity-80" onerror="this.style.display='none'"><div><span class="block text-white font-heading text-sm font-semibold tracking-wider">BHUMI FOODS</span><span class="block text-white/40 text-[10px] uppercase tracking-widest">Admin</span></div></a></div>
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <a href="/admin/dashboard.html"      class="admin-sidebar-link">Dashboard</a>
+      <a href="/admin/products/index.html" class="admin-sidebar-link">Products</a>
+      <a href="/admin/categories.html"     class="admin-sidebar-link">Categories</a>
+      <a href="/admin/homepage.html"       class="admin-sidebar-link">Homepage</a>
+      <a href="/admin/videos.html"         class="admin-sidebar-link">Factory Videos</a>
+      <a href="/admin/orders.html"         class="admin-sidebar-link">Orders</a>
+      <a href="/admin/settings.html"       class="admin-sidebar-link active" aria-current="page">Settings</a>
+    </nav>
+    <div class="px-3 py-4 border-t border-white/10"><button id="logout-btn" class="admin-sidebar-link w-full text-left text-red-300 hover:text-red-200 hover:bg-red-900/20">Log Out</button></div>
+  </aside>
+
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <header class="bg-white border-b border-sage px-6 py-4 flex items-center justify-between flex-shrink-0">
+      <h1 class="font-heading text-xl text-forest font-normal">Site Settings</h1>
+      <button id="save-settings-btn" class="btn-forest rounded-sm text-sm py-2.5 px-5">Save Settings</button>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6">
+      <form id="settings-form" class="max-w-2xl space-y-6" novalidate>
+
+        <!-- Contact & WhatsApp -->
+        <div class="admin-card">
+          <h2 class="font-heading text-base text-forest font-normal mb-5">Contact & WhatsApp</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="admin-label" for="whatsapp_number">WhatsApp Business Number <span class="text-red-500">*</span></label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">+</span>
+                <input id="whatsapp_number" name="whatsapp_number" type="tel" class="admin-input pl-7"
+                  placeholder="919744033555" value="919744033555">
+              </div>
+              <p class="text-xs text-gray-400 mt-1">Country code + number, digits only. Example: 919744033555</p>
+            </div>
+            <div>
+              <label class="admin-label" for="factory_email">Factory Email</label>
+              <input id="factory_email" name="factory_email" type="email" class="admin-input" value="info@bhumifoods.net">
+            </div>
+            <div>
+              <label class="admin-label" for="factory_hours">Factory Hours</label>
+              <input id="factory_hours" name="factory_hours" type="text" class="admin-input" value="Mon–Sat: 8:30 AM – 6:30 PM">
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="admin-card">
+          <h2 class="font-heading text-base text-forest font-normal mb-5">Social Media</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="admin-label" for="instagram_url">Instagram URL</label>
+              <input id="instagram_url" name="instagram_url" type="url" class="admin-input" value="https://www.instagram.com/bhumi_foodsindia">
+            </div>
+            <div>
+              <label class="admin-label" for="youtube_url">YouTube URL</label>
+              <input id="youtube_url" name="youtube_url" type="url" class="admin-input" value="https://www.youtube.com/@bhumifoods">
+            </div>
+          </div>
+        </div>
+
+        <!-- Language -->
+        <div class="admin-card">
+          <h2 class="font-heading text-base text-forest font-normal mb-5">Language</h2>
+          <div>
+            <label class="admin-label" for="default_language">Default Language for New Visitors</label>
+            <select id="default_language" name="default_language" class="admin-input">
+              <option value="en" selected>English</option>
+              <option value="ml">Malayalam</option>
+            </select>
+            <p class="text-xs text-gray-400 mt-1">Visitors can always switch using the language toggle.</p>
+          </div>
+        </div>
+
+        <!-- Success / error -->
+        <div id="settings-success" class="hidden bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Settings saved successfully.
+        </div>
+        <div id="settings-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-sm"></div>
+
+      </form>
+    </main>
+  </div>
+</div>
+<script type="module" src="/js/admin/settings-admin.js"></script>
+</body>
+</html>

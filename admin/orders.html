@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders — Bhumi Foods Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{'sage-light':'#F1F4E9','sage':'#DDE8D4','forest':'#214A36','cream':'#F4EBDD','beige':'#B7A078'},fontFamily:{heading:['"Playfair Display"','Georgia','serif'],body:['"DM Sans"','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body class="bg-sage-light font-body antialiased">
+<div class="flex h-screen overflow-hidden">
+  <aside class="w-60 bg-forest flex-shrink-0 hidden md:flex flex-col">
+    <div class="px-5 py-6 border-b border-white/10"><a href="/admin/dashboard.html" class="flex items-center gap-2.5"><img src="/assets/images/logo.png" class="h-8 w-8 object-contain opacity-80" onerror="this.style.display='none'"><div><span class="block text-white font-heading text-sm font-semibold tracking-wider">BHUMI FOODS</span><span class="block text-white/40 text-[10px] uppercase tracking-widest">Admin</span></div></a></div>
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <a href="/admin/dashboard.html"      class="admin-sidebar-link">Dashboard</a>
+      <a href="/admin/products/index.html" class="admin-sidebar-link">Products</a>
+      <a href="/admin/categories.html"     class="admin-sidebar-link">Categories</a>
+      <a href="/admin/homepage.html"       class="admin-sidebar-link">Homepage</a>
+      <a href="/admin/videos.html"         class="admin-sidebar-link">Factory Videos</a>
+      <a href="/admin/orders.html"         class="admin-sidebar-link active" aria-current="page">Orders</a>
+      <a href="/admin/settings.html"       class="admin-sidebar-link">Settings</a>
+    </nav>
+    <div class="px-3 py-4 border-t border-white/10"><button id="logout-btn" class="admin-sidebar-link w-full text-left text-red-300 hover:text-red-200 hover:bg-red-900/20">Log Out</button></div>
+  </aside>
+
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <header class="bg-white border-b border-sage px-6 py-4 flex items-center justify-between flex-shrink-0">
+      <h1 class="font-heading text-xl text-forest font-normal">Orders</h1>
+      <div class="flex gap-3">
+        <select id="status-filter" class="admin-input w-36 py-2 text-sm">
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6">
+
+      <!-- Info box -->
+      <div class="admin-card bg-cream border-beige/30 mb-6">
+        <p class="text-sm text-gray-600">
+          Orders are recorded automatically when a customer opens WhatsApp. Status starts as <strong>Pending</strong> — update it to <strong>Confirmed</strong> once you've spoken with the customer.
+        </p>
+      </div>
+
+      <!-- Orders table -->
+      <div class="admin-card p-0 overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-sage-light border-b border-sage">
+            <tr>
+              <th class="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500">Order</th>
+              <th class="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500 hidden md:table-cell">Date</th>
+              <th class="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500 hidden lg:table-cell">Items</th>
+              <th class="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500">Total</th>
+              <th class="text-left px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500">Status</th>
+              <th class="text-right px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-500">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body">
+            <tr><td colspan="6" class="px-5 py-10 text-center text-sm text-gray-400">Loading orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="orders-pagination" class="flex justify-center gap-2 mt-6"></div>
+    </main>
+  </div>
+</div>
+
+<!-- Order detail modal -->
+<div id="order-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40">
+  <div class="admin-card max-w-lg w-full max-h-[80vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="font-heading text-lg text-forest font-normal">Order Details</h3>
+      <button id="order-modal-close" class="text-gray-400 hover:text-forest transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="order-modal-content"></div>
+  </div>
+</div>
+
+<script type="module" src="/js/admin/orders-admin.js"></script>
+</body>
+</html>
