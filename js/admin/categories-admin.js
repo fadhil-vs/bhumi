@@ -1,13 +1,12 @@
 /**
  * Bhumi Foods — Categories Admin JS
- * Category images uploaded to Cloudinary.
+ * Category images uploaded to Supabase Storage.
  */
 import { requireAuth, initLogout } from './auth.js';
 import { supabase } from '../config/supabase.js';
-import { uploadToCloudinary } from '../utils/cloudinary.js';
 
 let editingId       = null;
-let pendingImageUrl = null; // Cloudinary URL after upload
+let pendingImageUrl = null;
 
 async function init() {
   await requireAuth();
@@ -30,17 +29,17 @@ async function loadCategories() {
     return;
   }
   if (!data?.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-10 text-center text-sm text-gray-400">No categories yet.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-10 text-center text-sm text-gray-400">No categories yet. Add one!</td></tr>`;
     return;
   }
 
   tbody.innerHTML = data.map(cat => `
-    <tr class="border-b border-sage/50 hover:bg-sage-light/40 transition-colors" data-id="${cat.id}">
-      <td class="px-5 py-3.5 text-gray-300 cursor-grab">⠿</td>
+    <tr class="border-b border-sage/50 hover:bg-sage-light/40 transition-colors">
+      <td class="px-5 py-3.5 text-gray-300 cursor-grab select-none">⠿</td>
       <td class="px-5 py-3.5">
         ${cat.image_path
           ? `<img src="${cat.image_path}" class="h-10 w-10 object-cover rounded-sm border border-sage">`
-          : `<div class="h-10 w-10 bg-sage rounded-sm border border-sage flex items-center justify-center text-xs text-gray-400">No img</div>`}
+          : `<div class="h-10 w-10 bg-sage rounded-sm flex items-center justify-center text-xs text-gray-400">No img</div>`}
       </td>
       <td class="px-5 py-3.5 font-medium text-sm text-gray-800">${cat.name_en}</td>
       <td class="px-5 py-3.5 text-sm text-gray-500 hidden md:table-cell">${cat.name_ml || '—'}</td>
@@ -52,39 +51,38 @@ async function loadCategories() {
       <td class="px-5 py-3.5 text-right">
         <div class="flex items-center justify-end gap-3">
           <button class="text-xs font-medium text-forest hover:underline edit-btn"
-            data-id="${cat.id}"
-            data-name-en="${cat.name_en}"
-            data-name-ml="${cat.name_ml || ''}"
-            data-image="${cat.image_path || ''}">Edit</button>
+            data-id="${cat.id}" data-name-en="${cat.name_en}"
+            data-name-ml="${cat.name_ml || ''}" data-image="${cat.image_path || ''}">Edit</button>
           <button class="text-xs font-medium text-red-500 hover:underline delete-btn" data-id="${cat.id}">Delete</button>
         </div>
       </td>
     </tr>`).join('');
 
-  document.querySelectorAll('.edit-btn').forEach(btn => {
+  document.querySelectorAll('.edit-btn').forEach(btn =>
     btn.addEventListener('click', () =>
-      openModal(btn.dataset.id, btn.dataset.nameEn, btn.dataset.nameMl, btn.dataset.image));
-  });
-  document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => deleteCategory(btn.dataset.id));
-  });
+      openModal(btn.dataset.id, btn.dataset.nameEn, btn.dataset.nameMl, btn.dataset.image)));
+  document.querySelectorAll('.delete-btn').forEach(btn =>
+    btn.addEventListener('click', () => deleteCategory(btn.dataset.id)));
 }
 
 function initModal() {
   document.getElementById('add-category-btn')?.addEventListener('click', () => openModal());
   document.getElementById('modal-cancel')?.addEventListener('click', closeModal);
 
-  // Image drop zone → Cloudinary upload
+  // Image drop zone
   const dropZone  = document.getElementById('cat-image-drop');
   const fileInput = document.getElementById('cat-image-input');
   const statusEl  = document.createElement('p');
-  statusEl.className = 'text-xs text-gray-400 mt-1';
-  dropZone?.parentNode.appendChild(statusEl);
+  statusEl.className = 'text-xs mt-1';
+  dropZone?.parentNode?.appendChild(statusEl);
 
   dropZone?.addEventListener('click',    () => fileInput.click());
   dropZone?.addEventListener('dragover', e  => { e.preventDefault(); dropZone.classList.add('border-forest'); });
   dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('border-forest'));
-  dropZone?.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('border-forest'); handleImageFile(e.dataTransfer.files[0], statusEl); });
+  dropZone?.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('border-forest');
+    handleImageFile(e.dataTransfer.files[0], statusEl);
+  });
   fileInput?.addEventListener('change', () => handleImageFile(fileInput.files[0], statusEl));
 
   document.getElementById('category-form')?.addEventListener('submit', async e => {
@@ -108,7 +106,7 @@ function initModal() {
     if (editingId) {
       ({ error } = await supabase.from('categories').update(payload).eq('id', editingId));
     } else {
-      ({ error } = await supabase.from('categories').insert({ ...payload, display_order: 99 }));
+      ({ error } = await supabase.from('categories').insert({ ...payload, is_active: true, display_order: 99 }));
     }
 
     btn.textContent = 'Save Category'; btn.disabled = false;
@@ -119,7 +117,8 @@ function initModal() {
 
 async function handleImageFile(file, statusEl) {
   if (!file) return;
-  // Show local preview
+
+  // Local preview immediately
   const reader = new FileReader();
   reader.onload = e => {
     const img = document.getElementById('cat-preview-img');
@@ -128,33 +127,37 @@ async function handleImageFile(file, statusEl) {
   };
   reader.readAsDataURL(file);
 
-  if (statusEl) statusEl.textContent = 'Uploading to Cloudinary…';
-  const result = await uploadToCloudinary(file, 'bhumi/categories');
-  if (result) {
-    pendingImageUrl = result.url;
-    if (statusEl) statusEl.textContent = '✓ Image uploaded successfully.';
-  } else {
-    if (statusEl) statusEl.textContent = '✗ Upload failed — check Cloudinary config.';
+  statusEl.textContent = 'Uploading…';
+  statusEl.className = 'text-xs mt-1 text-gray-500';
+
+  const ext  = file.name.split('.').pop();
+  const path = `categories/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from('product-images').upload(path, file, { upsert: false });
+
+  if (error) {
+    statusEl.textContent = '✗ Upload failed: ' + error.message;
+    statusEl.className = 'text-xs mt-1 text-red-500';
+    return;
   }
+
+  const { data } = supabase.storage.from('product-images').getPublicUrl(path);
+  pendingImageUrl = data.publicUrl;
+  statusEl.textContent = '✓ Image uploaded successfully.';
+  statusEl.className = 'text-xs mt-1 text-green-600';
 }
 
 function openModal(id = null, nameEn = '', nameMl = '', imageUrl = '') {
-  editingId       = id;
-  pendingImageUrl = imageUrl || null;
-
+  editingId = id; pendingImageUrl = imageUrl || null;
   document.getElementById('modal-title').textContent = id ? 'Edit Category' : 'Add Category';
   document.getElementById('cat-name-en').value = nameEn;
   document.getElementById('cat-name-ml').value = nameMl;
-
-  const preview = document.getElementById('cat-image-preview');
-  const img     = document.getElementById('cat-preview-img');
+  const img = document.getElementById('cat-preview-img');
   if (imageUrl && img) {
     img.src = imageUrl;
-    preview?.classList.remove('hidden');
+    document.getElementById('cat-image-preview')?.classList.remove('hidden');
   } else {
-    preview?.classList.add('hidden');
+    document.getElementById('cat-image-preview')?.classList.add('hidden');
   }
-
   document.getElementById('category-modal').classList.remove('hidden');
 }
 
@@ -164,7 +167,7 @@ function closeModal() {
 }
 
 async function deleteCategory(id) {
-  if (!confirm('Delete this category? Products in it will be uncategorised.')) return;
+  if (!confirm('Delete this category? Products in it will lose their category.')) return;
   const { error } = await supabase.from('categories').delete().eq('id', id);
   if (!error) await loadCategories();
   else alert('Error: ' + error.message);

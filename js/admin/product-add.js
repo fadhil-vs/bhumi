@@ -1,12 +1,10 @@
 /**
  * Bhumi Foods — Add Product Admin JS
- * Images uploaded to Cloudinary, data saved to Supabase.
+ * Images uploaded to Supabase Storage.
  */
 import { requireAuth, initLogout } from './auth.js';
 import { supabase } from '../config/supabase.js';
-import { uploadToCloudinary } from '../utils/cloudinary.js';
 
-// Collected image URLs after Cloudinary upload
 let uploadedImageUrls = [];
 
 async function init() {
@@ -32,14 +30,13 @@ async function loadCategories() {
 function initVariants() {
   const container = document.getElementById('variants-container');
   const tmpl      = document.getElementById('variant-row-template');
-  document.getElementById('add-variant-btn')?.addEventListener('click', () => addRow());
-
+  document.getElementById('add-variant-btn')?.addEventListener('click', addRow);
   function addRow() {
     const clone = tmpl.content.cloneNode(true);
     clone.querySelector('.remove-variant')?.addEventListener('click', e => e.target.closest('.variant-row').remove());
     container.appendChild(clone);
   }
-  addRow(); // start with one row
+  addRow();
 }
 
 function initImageUpload() {
@@ -48,7 +45,7 @@ function initImageUpload() {
   const grid    = document.getElementById('image-preview-grid');
   const statusEl = document.createElement('p');
   statusEl.className = 'text-xs text-gray-500 mt-2';
-  zone?.parentNode.insertBefore(statusEl, grid);
+  zone?.parentNode?.insertBefore(statusEl, grid);
 
   zone?.addEventListener('click',    () => input.click());
   zone?.addEventListener('dragover', e  => { e.preventDefault(); zone.classList.add('border-forest'); });
@@ -58,51 +55,45 @@ function initImageUpload() {
 
   async function handleFiles(files) {
     for (const file of [...files].slice(0, 6 - uploadedImageUrls.length)) {
-      // Local preview
       const wrap = document.createElement('div');
       wrap.className = 'relative group';
-      const img = document.createElement('img');
-      img.className = 'w-full aspect-square object-cover rounded-sm border border-sage opacity-50';
-      wrap.appendChild(img);
-
-      const loader = document.createElement('div');
-      loader.className = 'absolute inset-0 flex items-center justify-center text-xs text-gray-500';
-      loader.textContent = 'Uploading…';
-      wrap.appendChild(loader);
+      wrap.innerHTML = `<img class="w-full aspect-square object-cover rounded-sm border border-sage opacity-50"><div class="absolute inset-0 flex items-center justify-center text-xs text-gray-500 bg-white/60">Uploading…</div>`;
       grid.appendChild(wrap);
 
       const reader = new FileReader();
-      reader.onload = e => { img.src = e.target.result; };
+      reader.onload = e => wrap.querySelector('img').src = e.target.result;
       reader.readAsDataURL(file);
 
-      // Upload to Cloudinary
       statusEl.textContent = `Uploading ${file.name}…`;
-      const result = await uploadToCloudinary(file, 'bhumi/products');
+      const url = await uploadToSupabase(file);
 
-      if (result) {
-        img.style.opacity = '1';
-        loader.remove();
-        uploadedImageUrls.push(result.url);
-
+      if (url) {
+        wrap.querySelector('img').style.opacity = '1';
+        wrap.querySelector('div').remove();
+        uploadedImageUrls.push(url);
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.className = 'absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 text-xs hidden group-hover:flex items-center justify-center';
         removeBtn.textContent = '×';
-        removeBtn.addEventListener('click', () => {
-          uploadedImageUrls = uploadedImageUrls.filter(u => u !== result.url);
-          wrap.remove();
-        });
+        removeBtn.addEventListener('click', () => { uploadedImageUrls = uploadedImageUrls.filter(u => u !== url); wrap.remove(); });
         wrap.appendChild(removeBtn);
-        statusEl.textContent = `${uploadedImageUrls.length} image(s) uploaded.`;
+        statusEl.textContent = `✓ ${uploadedImageUrls.length} image(s) uploaded.`;
       } else {
-        loader.textContent = 'Failed';
-        loader.className = 'absolute inset-0 flex items-center justify-center text-xs text-red-500';
-        statusEl.textContent = 'Upload failed — check Cloudinary config.';
+        wrap.innerHTML = `<div class="w-full aspect-square bg-red-50 rounded-sm border border-red-200 flex items-center justify-center text-xs text-red-500">Failed</div>`;
+        statusEl.textContent = '✗ Upload failed.';
       }
-
       input.value = '';
     }
   }
+}
+
+async function uploadToSupabase(file) {
+  const ext  = file.name.split('.').pop();
+  const path = `products/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from('product-images').upload(path, file, { upsert: false });
+  if (error) { console.error('Upload error:', error.message); return null; }
+  const { data } = supabase.storage.from('product-images').getPublicUrl(path);
+  return data.publicUrl;
 }
 
 function initFeaturedToggle() {
@@ -125,7 +116,7 @@ async function save(isActive) {
   if (!name_en)     { showError('Product name (English) is required.'); return; }
   if (!category_id) { showError('Please select a category.'); return; }
 
-  const rows     = document.querySelectorAll('.variant-row');
+  const rows = document.querySelectorAll('.variant-row');
   const variants = [];
   for (const row of rows) {
     const wl = row.querySelector('[name="weight_label"]')?.value.trim();
@@ -152,12 +143,8 @@ async function save(isActive) {
 
   if (error) { showError(error.message); btn.textContent = 'Publish Product'; btn.disabled = false; return; }
 
-  // Insert variants
-  if (variants.length) {
-    await supabase.from('product_variants').insert(variants.map(v => ({ ...v, product_id: product.id })));
-  }
+  await supabase.from('product_variants').insert(variants.map(v => ({ ...v, product_id: product.id })));
 
-  // Insert images (Cloudinary URLs stored as storage_path)
   if (uploadedImageUrls.length) {
     await supabase.from('product_images').insert(
       uploadedImageUrls.map((url, i) => ({ product_id: product.id, storage_path: url, position: i }))
@@ -168,8 +155,8 @@ async function save(isActive) {
 }
 
 function showError(msg) {
-  const errBox = document.getElementById('form-error');
-  if (errBox) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+  const el = document.getElementById('form-error');
+  if (el) { el.textContent = msg; el.classList.remove('hidden'); }
 }
 
 init();
