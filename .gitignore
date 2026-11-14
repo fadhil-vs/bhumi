@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+*.secret.js
+secrets.js
+
+# Temp / OS files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# Editor
+.vscode/
+.idea/
