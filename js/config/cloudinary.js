@@ -10,8 +10,8 @@
  * 3. Replace the values below
  */
 
-export const CLOUDINARY_CLOUD_NAME  = 'YOUR_CLOUD_NAME';   // e.g. 'dxyz123abc'
-export const CLOUDINARY_UPLOAD_PRESET = 'YOUR_PRESET_NAME'; // e.g. 'bhumi_unsigned'
+export const CLOUDINARY_CLOUD_NAME    = 'decm89ct1';  // ✅ Your cloud name
+export const CLOUDINARY_UPLOAD_PRESET = 'ml_default'; // Default preset — change if needed
 
 /** True once credentials are filled in */
 export const isCloudinaryReady =
