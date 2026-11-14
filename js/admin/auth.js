@@ -16,6 +16,8 @@ export async function requireAuth() {
     window.location.href = LOGIN_PAGE;
     return null;
   }
+  // Session confirmed — reveal the page
+  document.body.style.visibility = 'visible';
   return session;
 }
 
@@ -37,10 +39,14 @@ const loginBtn = document.getElementById('login-btn');
 const togglePw = document.getElementById('toggle-pw');
 const pwInput  = document.getElementById('password');
 
-// If already logged in, go to dashboard
+// If already logged in, go to dashboard; otherwise show the page
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
-  if (session) window.location.href = DASHBOARD_PAGE;
+  if (session) {
+    window.location.href = DASHBOARD_PAGE;
+  } else {
+    document.body.style.visibility = 'visible';
+  }
 })();
 
 // Password visibility toggle
