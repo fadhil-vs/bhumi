@@ -5,7 +5,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
-env.js
+/env.js
 *.secret.js
 secrets.js
 
