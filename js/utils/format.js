@@ -30,6 +30,18 @@ export function truncate(str, maxLen = 80) {
 }
 
 /**
+ * Build a Supabase Storage public URL or resolve any relative image path.
+ * @param {string} path    - file path inside the bucket, or full URL
+ * @param {string} [bucket]- storage bucket name (default 'product-images')
+ */
+export function resolveImageUrl(path, bucket = 'product-images') {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const baseUrl = (typeof window !== 'undefined' && window.__ENV__?.SUPABASE_URL) || 'https://kjvxswuzbhcmtarxairm.supabase.co';
+  return `${baseUrl}/storage/v1/object/public/${bucket}/${path.replace(/^\/+/, '')}`;
+}
+
+/**
  * Build a Supabase Storage public URL.
  * @param {string} bucket  - storage bucket name
  * @param {string} path    - file path inside the bucket

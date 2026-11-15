@@ -79,7 +79,7 @@ async function loadCategories(lang) {
 function renderCategoryCard(cat, lang) {
   const name    = cat[`name_${lang}`] || cat.name_en;
   const imgPath = cat.image_path
-    ? `/api/image?path=${encodeURIComponent(cat.image_path)}`
+    ? resolveImageUrl(cat.image_path)
     : `/assets/images/category-placeholder.svg`;
 
   // Brand colours per category for placeholder backgrounds

@@ -1,17 +1,15 @@
 /**
  * Bhumi Foods — Cloudinary Configuration
  *
- * SETUP:
- * 1. Go to cloudinary.com → Dashboard → copy your Cloud Name
- * 2. Go to Settings → Upload → Upload Presets → Add preset
- *    - Signing Mode: Unsigned
- *    - Folder: bhumi  (optional)
- *    - Save and copy the Preset Name
- * 3. Replace the values below
+ * Credentials can be set via:
+ * 1. window.__ENV__ in env.js (ignored in git)
+ * 2. Or replace fallback placeholders below
  */
 
-export const CLOUDINARY_CLOUD_NAME    = 'decm89ct1';  // ✅ Your cloud name
-export const CLOUDINARY_UPLOAD_PRESET = 'ml_default'; // Default preset — change if needed
+const env = (typeof window !== 'undefined' && window.__ENV__) || {};
+
+export const CLOUDINARY_CLOUD_NAME    = env.CLOUDINARY_CLOUD_NAME || 'YOUR_CLOUDINARY_CLOUD_NAME';
+export const CLOUDINARY_UPLOAD_PRESET = env.CLOUDINARY_UPLOAD_PRESET || 'YOUR_CLOUDINARY_UPLOAD_PRESET';
 
 /** True once credentials are filled in */
 export const isCloudinaryReady =

@@ -19,7 +19,7 @@ export function renderImageGallery(images, altText = 'Product image') {
 
   const sorted = [...images].sort((a, b) => a.position - b.position);
   const toUrl  = (path) => path
-    ? `/api/image?path=${encodeURIComponent(path)}`
+    ? resolveImageUrl(path)
     : '/assets/images/product-placeholder.svg';
 
   return /* html */`

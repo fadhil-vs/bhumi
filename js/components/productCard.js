@@ -4,7 +4,7 @@
  */
 
 import { t, getLang } from '../utils/i18n.js';
-import { formatPrice } from '../utils/format.js';
+import { formatPrice, resolveImageUrl } from '../utils/format.js';
 
 /**
  * @param {Object} product
@@ -28,7 +28,7 @@ export function renderProductCard(product, lang = null) {
   const imgs = product.images || product.product_images || [];
   const imgPath = imgs.sort((a, b) => a.position - b.position)[0]?.storage_path;
   const imgSrc  = imgPath
-    ? `/api/image?path=${encodeURIComponent(imgPath)}`  // replaced with real URL in M4
+    ? resolveImageUrl(imgPath)
     : '/assets/images/product-placeholder.svg';
 
   const isFeatured = product.is_featured;
