@@ -4,6 +4,7 @@
  */
 import { requireAuth, initLogout } from './auth.js';
 import { supabase } from '../config/supabase.js';
+import { resolveImageUrl } from '../utils/format.js';
 
 const productId = new URLSearchParams(location.search).get('id');
 
@@ -65,7 +66,7 @@ async function loadProduct() {
   (data.variants || []).forEach(v => addVariantRow(v));
   document.getElementById('add-variant-btn')?.addEventListener('click', () => addVariantRow());
 
-  (data.images || []).forEach(img => addImagePreview(img.storage_path, img.id));
+  (data.images || []).forEach(img => addImagePreview(resolveImageUrl(img.storage_path), img.id));
   initImageUpload();
 }
 

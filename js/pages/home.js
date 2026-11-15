@@ -5,7 +5,7 @@
 
 import { renderNavbar, initNavbar }   from '../components/navbar.js';
 import { renderFooter, initFooter }   from '../components/footer.js';
-import { renderProductCard, renderProductCardSkeleton } from '../components/productCard.js';
+import { renderProductCard, renderProductCardSkeleton, initQuickAddButtons } from '../components/productCard.js';
 import { renderVideoCard, buildPlaceholderSteps } from '../components/videoPlayer.js';
 import { getFeaturedProducts }         from '../services/products.js';
 import { getCategories, PLACEHOLDER_CATEGORIES } from '../services/categories.js';
@@ -22,6 +22,7 @@ async function init() {
   initNavbar();
   initFooter();
   initScrollSpy();
+  initQuickAddButtons();
 
   // ── Run sections in parallel ──────────────────────────────
   await Promise.all([

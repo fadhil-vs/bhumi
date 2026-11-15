@@ -5,7 +5,7 @@
 
 import { renderNavbar, initNavbar }  from '../components/navbar.js';
 import { renderFooter, initFooter }  from '../components/footer.js';
-import { renderProductCard, renderProductCardSkeleton } from '../components/productCard.js';
+import { renderProductCard, renderProductCardSkeleton, initQuickAddButtons } from '../components/productCard.js';
 import { getProducts }               from '../services/products.js';
 import { getCategories }             from '../services/categories.js';
 import { getLang, t, applyLangFont } from '../utils/i18n.js';
@@ -21,6 +21,7 @@ async function init() {
   initNavbar();
   initFooter();
   initScrollSpy();
+  initQuickAddButtons();
 
   // Load categories for filter
   const categories = await getCategories();

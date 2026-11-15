@@ -11,7 +11,7 @@ import { renderProductCard }            from '../components/productCard.js';
 import { getProduct, getProducts }     from '../services/products.js';
 import { addToCart }                   from '../services/cart.js';
 import { getLang, t, applyLangFont }   from '../utils/i18n.js';
-import { formatPrice, getParam }       from '../utils/format.js';
+import { formatPrice, getParam, resolveImageUrl } from '../utils/format.js';
 import { initScrollSpy }               from '../utils/dom.js';
 
 let selectedVariant = null;
@@ -101,6 +101,8 @@ function renderProduct(product, lang) {
   // Add to cart
   document.getElementById('add-to-cart-btn')?.addEventListener('click', () => {
     if (!selectedVariant) return;
+    const imgs = product.product_images || product.images || [];
+    const firstImg = [...imgs].sort((a, b) => a.position - b.position)[0]?.storage_path;
     addToCart({
       id:           `${product.id}_${selectedVariant.id}`,
       product_id:   product.id,
@@ -110,7 +112,7 @@ function renderProduct(product, lang) {
       weight_label: selectedVariant.weight_label,
       price:        selectedVariant.price,
       qty,
-      image_url:    null,
+      image_url:    firstImg ? resolveImageUrl(firstImg) : null,
     });
     showToast(lang === 'ml' ? 'കാർട്ടിൽ ചേർത്തു' : 'Added to cart', lang);
   });
