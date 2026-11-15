@@ -1,6 +1,6 @@
 /**
  * Bhumi Foods — Product Card Component
- * Renders a single product card for grids and carousels.
+ * Renders a single product card with interactive weight selector and instant price update.
  */
 
 import { t, getLang } from '../utils/i18n.js';
@@ -15,8 +15,8 @@ import { addToCart } from '../services/cart.js';
 export function renderProductCard(product, lang = null) {
   lang = lang || getLang();
 
-  const name     = product[`name_${lang}`]        || product.name_en  || '';
-  const desc     = product[`description_${lang}`] || product.description_en || '';
+  const name      = product[`name_${lang}`]        || product.name_en  || '';
+  const desc      = product[`description_${lang}`] || product.description_en || '';
   const shortDesc = desc.length > 75 ? desc.slice(0, 75).trimEnd() + '…' : desc;
 
   // Sort variants by price
@@ -34,8 +34,14 @@ export function renderProductCard(product, lang = null) {
 
   const isFeatured = product.is_featured;
 
+  // Serialize variants for client-side interactivity
+  const safeVariantsJson = JSON.stringify(variants).replace(/"/g, '&quot;');
+
   return /* html */`
-    <article class="product-card group relative flex flex-col bg-white border border-sage/60 rounded-sm overflow-hidden hover:border-forest/40 hover:shadow-md transition-all duration-300" data-product-id="${product.id}">
+    <article
+      class="product-card group relative flex flex-col bg-white border border-sage/60 rounded-sm overflow-hidden hover:border-forest/40 hover:shadow-md transition-all duration-300"
+      data-product-id="${product.id}"
+      data-variants="${safeVariantsJson}">
 
       <!-- Image -->
       <a href="/product.html?id=${product.id}" class="product-card-img-wrap block aspect-square overflow-hidden bg-sage-light/50 relative">
@@ -65,15 +71,20 @@ export function renderProductCard(product, lang = null) {
           <p class="text-[13px] text-gray-500 leading-relaxed mb-3 flex-1 line-clamp-2">${shortDesc}</p>
         ` : '<div class="flex-1"></div>'}
 
-        <!-- Variant pills (first 4) -->
+        <!-- Interactive Variant pills -->
         ${variants.length ? `
           <div class="flex flex-wrap gap-1.5 mb-4" aria-label="Available weights">
-            ${variants.slice(0, 4).map(v => `
-              <span class="text-[11px] px-2 py-0.5 bg-sage-light text-forest border border-sage font-medium rounded-sm">
+            ${variants.map((v, i) => `
+              <button
+                type="button"
+                class="variant-pill-btn text-[11px] px-2.5 py-1 font-medium rounded-sm border transition-all duration-150 ${i === 0 ? 'bg-forest text-white border-forest active-variant' : 'bg-sage-light text-forest border-sage hover:border-forest/50'}"
+                data-product-id="${product.id}"
+                data-variant-id="${v.id}"
+                data-weight="${v.weight_label}"
+                data-price="${v.price}">
                 ${v.weight_label}
-              </span>
+              </button>
             `).join('')}
-            ${variants.length > 4 ? `<span class="text-[11px] text-gray-400 self-center">+${variants.length - 4} more</span>` : ''}
           </div>
         ` : ''}
 
@@ -81,7 +92,9 @@ export function renderProductCard(product, lang = null) {
         <div class="flex items-center justify-between gap-2 pt-2 border-t border-sage/40">
           <div>
             <span class="block text-[10px] text-gray-400 uppercase tracking-widest leading-tight">${t('featured.from', lang)}</span>
-            <span class="text-beige font-semibold text-base">${formatPrice(minPrice)}</span>
+            <span class="card-price-display text-beige font-semibold text-base" data-product-id="${product.id}">
+              ${formatPrice(minPrice)}
+            </span>
           </div>
 
           <div class="flex items-center gap-1.5">
@@ -117,10 +130,48 @@ export function renderProductCard(product, lang = null) {
 }
 
 /**
- * Global handler for quick-add buttons across product grids.
+ * Global handler for interactive variant pills and quick-add buttons across product grids.
  */
-export function initQuickAddButtons(toastContainerId = 'cart-toast') {
+export function initQuickAddButtons() {
+  // Delegate clicks on variant pill buttons
   document.addEventListener('click', (e) => {
+    const pill = e.target.closest('.variant-pill-btn');
+    if (pill) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const card = pill.closest('.product-card');
+      if (!card) return;
+
+      const variantId = pill.dataset.variantId;
+      const weight    = pill.dataset.weight;
+      const price     = parseFloat(pill.dataset.price);
+
+      // 1. Update active styling on pills
+      card.querySelectorAll('.variant-pill-btn').forEach(btn => {
+        btn.classList.remove('bg-forest', 'text-white', 'border-forest', 'active-variant');
+        btn.classList.add('bg-sage-light', 'text-forest', 'border-sage');
+      });
+      pill.classList.remove('bg-sage-light', 'text-forest', 'border-sage');
+      pill.classList.add('bg-forest', 'text-white', 'border-forest', 'active-variant');
+
+      // 2. Update price display
+      const priceEl = card.querySelector('.card-price-display');
+      if (priceEl && !isNaN(price)) {
+        priceEl.textContent = formatPrice(price);
+      }
+
+      // 3. Update quick-add button data payload
+      const quickAddBtn = card.querySelector('.quick-add-btn');
+      if (quickAddBtn) {
+        quickAddBtn.dataset.variantId = variantId;
+        quickAddBtn.dataset.weight    = weight;
+        quickAddBtn.dataset.price     = price;
+      }
+      return;
+    }
+
+    // Delegate clicks on quick-add button
     const btn = e.target.closest('.quick-add-btn');
     if (!btn) return;
 

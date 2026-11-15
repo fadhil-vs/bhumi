@@ -116,7 +116,7 @@ export async function getFeaturedProducts() {
       .eq('is_active', true)
       .eq('is_featured', true)
       .order('featured_order', { ascending: true })
-      .limit(5);
+      .limit(9);
     if (error) throw error;
     return data || [];
   } catch (err) {

@@ -51,94 +51,56 @@
   <div id="nav-container" role="banner"></div>
 
 
-  <!-- ═══════════════════════════════════════════════
-       SECTION 1 — HERO
+    <!-- ═══════════════════════════════════════════════
+       SECTION 1 — HERO (50/50 Split Layout)
   ═══════════════════════════════════════════════ -->
-  <section id="hero" class="hero-section flex items-center relative overflow-hidden" aria-label="Hero"
-    style="background-color: #214A36;">
-    <!-- Real factory photo overlay (right side desktop) -->
-    <div class="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block pointer-events-none" aria-hidden="true">
-      <img src="/assets/images/chilli_po_fact.webp"
-        alt="Bhumi Foods factory"
-        class="w-full h-full object-cover"
-        style="opacity: 0.22; mix-blend-mode: luminosity;">
-      <!-- Gradient mask over photo -->
-      <div class="absolute inset-0" style="background: linear-gradient(to right, #214A36 0%, rgba(33,74,54,0.6) 40%, rgba(33,74,54,0.1) 100%);"></div>
-    </div>
-
-    <!-- Decorative large letter -->
-    <div class="absolute right-0 bottom-0 select-none pointer-events-none hidden lg:flex items-end justify-end pr-16 pb-8" aria-hidden="true">
-      <span class="font-heading font-bold leading-none text-white" style="font-size: clamp(14rem, 22vw, 22rem); opacity: 0.03; letter-spacing: -0.04em;">B</span>
+  <section id="hero" class="relative overflow-hidden bg-forest pt-5 pb-8 md:pt-8 md:pb-12" aria-label="Hero">
+    <!-- Factory photo texture overlay -->
+    <div class="absolute inset-0 pointer-events-none opacity-10 mix-blend-luminosity" aria-hidden="true">
+      <img src="/assets/images/chilli_po_fact.webp" alt="Bhumi Foods factory" class="w-full h-full object-cover">
     </div>
 
     <!-- Decorative horizontal line -->
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-beige/20 to-transparent" aria-hidden="true"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-beige/25 to-transparent" aria-hidden="true"></div>
 
-    <!-- Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 md:py-32 lg:py-40 w-full">
-      <div class="max-w-2xl xl:max-w-3xl">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Pre-label -->
-        <div class="flex items-center gap-3 mb-7 md:mb-9" aria-hidden="true">
-          <div class="h-px w-8 bg-beige"></div>
-          <span class="text-beige text-[11px] font-semibold uppercase tracking-[0.22em]">Pure Kerala Masalas</span>
+
+
+      <!-- Real Products Visible Right At The Beginning On Mobile & Desktop -->
+      <div>
+        <div class="flex items-center justify-between mb-3 text-white">
+          <span class="text-xs uppercase tracking-widest text-beige font-semibold">Featured Range</span>
+          <span class="text-[11px] text-white/60">Choose weight & add to cart</span>
         </div>
 
-        <!-- Heading -->
-        <h1 class="font-heading font-normal text-white leading-[1.08] mb-5 md:mb-7"
-          style="font-size: clamp(2.5rem, 7vw, 5.5rem);">
-          Authentic<br>Flavours.<br>
-          <em class="text-beige not-italic">Carefully<br>Crafted.</em>
-        </h1>
-
-        <!-- Sub-text -->
-        <p class="text-white/65 leading-relaxed mb-9 md:mb-11 max-w-lg"
-          style="font-size: clamp(0.95rem, 2vw, 1.125rem);">
-          Discover carefully prepared masala powders, made with attention to quality and the flavours of tradition.
-        </p>
-
-        <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row gap-3.5">
-          <a href="/products.html"
-            class="btn-primary group justify-center sm:justify-start"
-            aria-label="Explore our products">
-            Explore Products
-            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
-          <a href="#story"
-            class="btn-outline justify-center sm:justify-start"
-            aria-label="Read our brand story">
-            Our Story
-          </a>
+        <!-- 2 cols on mobile, 3 cols on tablet, 4 cols on desktop: Products visible without scrolling -->
+        <div id="hero-products-showcase" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          <div class="bg-white/10 rounded-sm p-4 h-64 animate-pulse"></div>
+          <div class="bg-white/10 rounded-sm p-4 h-64 animate-pulse"></div>
+          <div class="bg-white/10 rounded-sm p-4 h-64 animate-pulse hidden md:block"></div>
+          <div class="bg-white/10 rounded-sm p-4 h-64 animate-pulse hidden lg:block"></div>
         </div>
       </div>
-    </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40" aria-hidden="true">
-      <span class="text-white text-[9px] uppercase tracking-[0.25em]">Scroll</span>
-      <div class="w-px h-10 bg-gradient-to-b from-white/60 to-transparent hero-scroll-line"></div>
     </div>
   </section>
 
-
-  <!-- ═══════════════════════════════════════════════
-       SECTION 2 — FEATURED PRODUCTS (5)
-  ═══════════════════════════════════════════════ -->
-  <section id="featured" class="bg-white py-16 md:py-24" aria-labelledby="featured-heading">
+  <!-- =============================================
+       SECTION 2 — FEATURED PRODUCTS (9 Products Grid)
+  ============================================= -->
+  <section id="featured" class="bg-white py-14 md:py-20" aria-labelledby="featured-heading">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 md:mb-12">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 md:mb-10">
         <div>
-          <span class="block text-beige text-xs font-semibold uppercase tracking-[0.2em] mb-2">Best Sellers</span>
-          <h2 id="featured-heading" class="font-heading text-3xl md:text-4xl text-forest font-normal leading-tight">
-            Our Most Popular
+          <span class="block text-beige text-xs font-semibold uppercase tracking-[0.2em] mb-1.5">Best Sellers</span>
+          <h2 id="featured-heading" class="font-heading text-2xl md:text-3xl lg:text-4xl text-forest font-normal leading-tight">
+            Our Most Popular Range
           </h2>
-          <p class="text-gray-500 text-sm mt-2 leading-relaxed max-w-sm">
-            Handpicked by our customers, season after season.
+          <p class="text-gray-500 text-sm mt-1 leading-relaxed max-w-sm">
+            Handpicked by our customers, freshly ground in Thrissur.
           </p>
         </div>
         <a href="/products.html"
@@ -150,27 +112,13 @@
         </a>
       </div>
 
-      <!-- Mobile: horizontal scroll / Desktop: 5-col grid -->
-      <!-- Mobile scroll container -->
-      <div class="sm:hidden scroll-snap-x pb-2 -mx-4 px-4" role="list" aria-label="Featured products">
-        <div id="featured-grid" class="flex gap-4" style="width: max-content;">
-          <!-- JS renders product cards here (280px wide each on mobile) -->
-          <!-- Skeleton placeholder until JS loads -->
-          <div class="scroll-snap-item bg-white w-[260px] overflow-hidden skeleton" style="height: 340px;"></div>
-          <div class="scroll-snap-item bg-white w-[260px] overflow-hidden skeleton" style="height: 340px;"></div>
-          <div class="scroll-snap-item bg-white w-[260px] overflow-hidden skeleton" style="height: 340px;"></div>
-        </div>
-      </div>
-
-      <!-- Desktop grid: 2-3-2 or 5-col -->
-      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5" id="featured-grid-desktop" role="list" aria-label="Featured products">
-        <!-- JS fills this grid -->
+      <!-- 3-Column x 3-Row Grid (Up to 9 products) -->
+      <div id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" role="list" aria-label="Featured products">
+        <!-- JS fills this grid with up to 9 products -->
       </div>
     </div>
   </section>
-
-
-  <!-- ═══════════════════════════════════════════════
+<!-- ═══════════════════════════════════════════════
        SECTION 3 — FACTORY / PROCESS VIDEOS
   ═══════════════════════════════════════════════ -->
   <section id="process" class="bg-forest py-16 md:py-24 overflow-hidden" aria-labelledby="process-heading">
