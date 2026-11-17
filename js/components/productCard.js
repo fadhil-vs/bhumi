@@ -39,7 +39,7 @@ export function renderProductCard(product, lang = null) {
 
   return /* html */`
     <article
-      class="product-card group relative flex flex-col bg-white border border-sage/60 rounded-sm overflow-hidden hover:border-forest/40 hover:shadow-md transition-all duration-300"
+      class="product-card group relative flex flex-col bg-white border border-[#D6E4F2] rounded-sm overflow-hidden hover:border-[#27598A]/40 hover:shadow-md transition-all duration-300"
       data-product-id="${product.id}"
       data-variants="${safeVariantsJson}">
 
@@ -89,10 +89,10 @@ export function renderProductCard(product, lang = null) {
         ` : ''}
 
         <!-- Price + Actions -->
-        <div class="flex items-center justify-between gap-2 pt-2 border-t border-sage/40">
+        <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#D6E4F2]/40">
           <div>
             <span class="block text-[10px] text-gray-400 uppercase tracking-widest leading-tight">${t('featured.from', lang)}</span>
-            <span class="card-price-display text-beige font-semibold text-base" data-product-id="${product.id}">
+            <span class="card-price-display text-[#1B4170] font-semibold text-base" data-product-id="${product.id}">
               ${formatPrice(minPrice)}
             </span>
           </div>
