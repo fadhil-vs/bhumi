@@ -15,7 +15,7 @@ export function renderNavbar() {
     : '';
 
   return /* html */`
-    <nav class="navbar fixed top-0 left-0 right-0 z-50 bg-white/96 backdrop-blur-md border-b border-sage" role="navigation" aria-label="Main navigation">
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 bg-white/96 backdrop-blur-md border-b border-[#D6E4F2]" role="navigation" aria-label="Main navigation">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 md:h-[72px]">
 
@@ -25,7 +25,7 @@ export function renderNavbar() {
               class="h-9 w-9 object-contain transition-opacity duration-200 group-hover:opacity-80"
               onerror="this.style.display='none'">
             <span class="font-heading text-[17px] font-semibold text-forest tracking-wider leading-none">
-              BHUMI<br><span class="text-beige text-[11px] tracking-[0.25em] font-normal">FOODS</span>
+              BHUMI<br><span class="text-[#D4930D] text-[11px] tracking-[0.25em] font-normal">FOODS</span>
             </span>
           </a>
 
@@ -43,14 +43,14 @@ export function renderNavbar() {
             <!-- Language Toggle -->
             <button
               id="lang-toggle"
-              class="hidden sm:inline-flex text-xs font-semibold px-3 py-1.5 rounded-full border border-sage text-forest hover:bg-sage-light hover:border-forest/30 transition-all duration-200"
+              class="hidden sm:inline-flex text-xs font-semibold px-3 py-1.5 rounded-full border border-[#D6E4F2] text-forest hover:bg-sage-light hover:border-forest/30 transition-all duration-200"
               aria-label="Switch language">
               ${lang === 'en' ? 'മലയാളം' : 'English'}
             </button>
 
             <!-- Cart -->
             <a href="/cart.html"
-              class="relative p-2 text-forest hover:text-beige transition-colors duration-200 ml-1"
+              class="relative p-2 text-forest hover:text-[#27598A] transition-colors duration-200 ml-1"
               aria-label="${t('nav.cart', lang)}">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -61,7 +61,7 @@ export function renderNavbar() {
             <!-- Mobile Hamburger -->
             <button
               id="mobile-menu-btn"
-              class="md:hidden p-2 text-forest hover:text-beige transition-colors duration-200 ml-1"
+              class="md:hidden p-2 text-forest hover:text-[#27598A] transition-colors duration-200 ml-1"
               aria-label="Open navigation menu"
               aria-expanded="false"
               aria-controls="mobile-menu">
@@ -74,7 +74,7 @@ export function renderNavbar() {
 
       <!-- ── Mobile Menu ── -->
       <div id="mobile-menu"
-        class="md:hidden hidden bg-white border-t border-sage"
+        class="md:hidden hidden bg-white border-t border-[#D6E4F2]"
         aria-hidden="true"
         role="menu">
         <div class="px-5 py-6 space-y-1">
