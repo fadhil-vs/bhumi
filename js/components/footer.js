@@ -8,7 +8,7 @@ export function renderFooter() {
   const lang = getLang();
 
   return /* html */`
-    <footer class="bg-forest text-white" role="contentinfo">
+    <footer class="bg-[#1B4170] text-white" role="contentinfo">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8 md:pt-20 md:pb-10">
 
         <!-- ── Main Grid ── -->
@@ -21,10 +21,10 @@ export function renderFooter() {
                 class="h-10 w-10 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
                 onerror="this.style.display='none'">
               <span class="font-heading text-[17px] font-semibold tracking-wider">
-                BHUMI<br><span class="text-beige text-[11px] tracking-[0.25em] font-normal">FOODS</span>
+                BHUMI<br><span class="text-[#FCD34D] text-[11px] tracking-[0.25em] font-normal">FOODS</span>
               </span>
             </a>
-            <p class="font-heading italic text-beige text-sm leading-relaxed mb-5">
+            <p class="font-heading italic text-[#FCD34D] text-sm leading-relaxed mb-5">
               "${t('footer.tagline', lang)}"
             </p>
             <div class="flex flex-wrap gap-2">
@@ -35,7 +35,7 @@ export function renderFooter() {
 
           <!-- Our Factory -->
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-beige mb-5">
+            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-[#FCD34D] mb-5">
               ${t('footer.ourFactory', lang)}
             </h3>
             <div class="space-y-3 text-sm text-white/70 leading-relaxed">
@@ -43,15 +43,15 @@ export function renderFooter() {
               <p>14/31D Peringannur<br>Mundur, Thrissur<br>Kerala, 680545</p>
               <div class="pt-1 space-y-2">
                 <p class="flex items-start gap-2">
-                  <svg class="w-3.5 h-3.5 text-beige mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <svg class="w-3.5 h-3.5 text-[#FCD34D] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   <a href="tel:+919744033555" class="hover:text-white transition-colors">+91 9744 033 555</a>
                 </p>
                 <p class="flex items-start gap-2">
-                  <svg class="w-3.5 h-3.5 text-beige mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  <svg class="w-3.5 h-3.5 text-[#FCD34D] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                   <a href="mailto:info@bhumifoods.net" class="hover:text-white transition-colors">info@bhumifoods.net</a>
                 </p>
                 <p class="flex items-start gap-2">
-                  <svg class="w-3.5 h-3.5 text-beige mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <svg class="w-3.5 h-3.5 text-[#FCD34D] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   <span>Mon–Sat: 8:30 AM – 6:30 PM</span>
                 </p>
               </div>
@@ -60,7 +60,7 @@ export function renderFooter() {
 
           <!-- Quick Links -->
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-beige mb-5">
+            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-[#FCD34D] mb-5">
               ${t('footer.quickLinks', lang)}
             </h3>
             <ul class="space-y-2.5">
@@ -73,7 +73,7 @@ export function renderFooter() {
               ].map(([href, label]) => `
                 <li>
                   <a href="${href}" class="footer-link text-sm text-white/65">
-                    <svg class="w-3 h-3 text-beige flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <svg class="w-3 h-3 text-[#FCD34D] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
                     ${label}
@@ -85,7 +85,7 @@ export function renderFooter() {
 
           <!-- Follow Us -->
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-beige mb-5">
+            <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-[#FCD34D] mb-5">
               ${t('footer.followUs', lang)}
             </h3>
             <p class="text-sm text-white/60 leading-relaxed mb-5">
