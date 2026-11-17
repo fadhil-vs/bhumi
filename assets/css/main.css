@@ -4,26 +4,27 @@
    ============================================================ */
 
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Sans+Malayalam:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Noto+Sans+Malayalam:wght@300;400;500;600&display=swap');
 
 /* ── CSS Custom Properties ── */
 :root {
-  --color-sage-light: #F1F4E9;
-  --color-sage:       #DDE8D4;
-  --color-forest:     #214A36;
-  --color-cream:      #F4EBDD;
-  --color-beige:      #B7A078;
+  --color-sage-light: #EEF4FA;
+  --color-sage:       #D6E4F2;
+  --color-forest:     #27598A;
+  --color-cream:      #EEF4FA;
+  --color-beige:      #D4930D;
   --color-white:      #FFFFFF;
+  --color-dark-blue:  #1B4170;
 
-  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Segoe UI', 'Open Sans', system-ui, sans-serif;
+  --font-body:    'Segoe UI', 'Open Sans', system-ui, sans-serif;
   --font-ml:      'Noto Sans Malayalam', sans-serif;
 
   --transition-base: 200ms ease;
   --transition-slow: 350ms ease;
 
-  --shadow-card: 0 2px 16px rgba(33, 74, 54, 0.08);
-  --shadow-hover: 0 8px 32px rgba(33, 74, 54, 0.14);
+  --shadow-card: 0 2px 16px rgba(39, 89, 138, 0.08);
+  --shadow-hover: 0 8px 32px rgba(39, 89, 138, 0.14);
 }
 
 /* ── Reset & Base ── */
@@ -38,7 +39,7 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--color-sage-light);
-  color: #2D3A30;
+  color: #1F2937;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
@@ -48,7 +49,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.15;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -72,7 +73,7 @@ img, video { max-width: 100%; display: block; }
   will-change: box-shadow;
 }
 .navbar.scrolled {
-  box-shadow: 0 1px 24px rgba(33, 74, 54, 0.1);
+  box-shadow: 0 1px 24px rgba(39, 89, 138, 0.1);
 }
 .nav-link {
   position: relative;
@@ -102,8 +103,8 @@ img, video { max-width: 100%; display: block; }
 }
 .hero-bg-pattern {
   background-image:
-    radial-gradient(circle at 20% 80%, rgba(183,160,120,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(183,160,120,0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(39,89,138,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(39,89,138,0.05) 0%, transparent 50%);
 }
 .hero-scroll-line {
   animation: scrollPulse 2.5s ease-in-out infinite;
@@ -155,11 +156,11 @@ img, video { max-width: 100%; display: block; }
 .category-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(33,74,54,0.72) 0%, rgba(33,74,54,0.1) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(39,89,138,0.72) 0%, rgba(39,89,138,0.1) 60%, transparent 100%);
   transition: background var(--transition-slow);
 }
 .category-card:hover .category-card-overlay {
-  background: linear-gradient(to top, rgba(33,74,54,0.85) 0%, rgba(33,74,54,0.3) 70%, transparent 100%);
+  background: linear-gradient(to top, rgba(39,89,138,0.85) 0%, rgba(39,89,138,0.3) 70%, transparent 100%);
 }
 
 /* ── Process / Video Section ── */
@@ -170,10 +171,10 @@ img, video { max-width: 100%; display: block; }
 }
 .process-step-card:hover {
   background: rgba(255,255,255,0.1);
-  border-color: rgba(183,160,120,0.4);
+  border-color: rgba(252,211,77,0.4);
 }
 .video-placeholder {
-  background: linear-gradient(135deg, #1b3d2a 0%, #2d5a40 50%, #1b3d2a 100%);
+  background: linear-gradient(135deg, #1B4170 0%, #27598A 50%, #1B4170 100%);
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -182,7 +183,7 @@ img, video { max-width: 100%; display: block; }
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(183,160,120,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(252,211,77,0.12) 0%, transparent 70%);
 }
 .video-play-btn {
   transition: transform var(--transition-base), background var(--transition-base);
@@ -271,15 +272,16 @@ img, video { max-width: 100%; display: block; }
   align-items: center;
   gap: 8px;
   padding: 11px 24px;
-  background: var(--color-forest);
+  background: #27598A;
   color: white;
   font-size: 0.8125rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: opacity var(--transition-base);
+  transition: background var(--transition-base);
+  border-radius: 2px;
 }
-.btn-forest:hover { opacity: 0.88; }
+.btn-forest:hover { background: #1B4170; }
 
 /* ── Variant Pills ── */
 .variant-pill {
@@ -294,11 +296,11 @@ img, video { max-width: 100%; display: block; }
   user-select: none;
 }
 .variant-pill:hover {
-  border-color: var(--color-forest);
+  border-color: #27598A;
 }
 .variant-pill.selected {
-  background: var(--color-forest);
-  border-color: var(--color-forest);
+  background: #27598A;
+  border-color: #27598A;
   color: white;
 }
 .variant-pill:disabled,
@@ -315,7 +317,7 @@ img, video { max-width: 100%; display: block; }
   right: -4px;
   min-width: 18px;
   height: 18px;
-  background: var(--color-forest);
+  background: #27598A;
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -394,7 +396,7 @@ img, video { max-width: 100%; display: block; }
   background: white;
   font-family: var(--font-body);
   font-size: 0.875rem;
-  color: #2D3A30;
+  color: #1F2937;
   outline: none;
   transition: border-color var(--transition-base);
   border-radius: 4px;
@@ -404,7 +406,7 @@ img, video { max-width: 100%; display: block; }
   display: block;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #3d4f3f;
+  color: #374151;
   margin-bottom: 6px;
   letter-spacing: 0.01em;
 }
@@ -435,7 +437,7 @@ img, video { max-width: 100%; display: block; }
 
 /* ── Focus / Accessibility ── */
 :focus-visible {
-  outline: 2.5px solid var(--color-beige);
+  outline: 2.5px solid #D4930D;
   outline-offset: 3px;
 }
 .sr-only {
