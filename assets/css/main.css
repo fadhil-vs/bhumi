@@ -471,7 +471,7 @@ img, video { max-width: 100%; display: block; }
 
 /* ============================================================
    Product Card v2 (pc2-*)
-   Redesigned card: clickable, weight+price grid, big ATC btn.
+   Pixel-perfect match to reference screenshot.
    ============================================================ */
 
 /* Card shell */
@@ -540,49 +540,56 @@ img, video { max-width: 100%; display: block; }
   flex: 1;
 }
 
-/* Title */
+/* Title — blue, bold (matches screenshot) */
 .pc2-title {
-  font-size: 24px;
-  font-weight: 500;
-  color: #111827;
+  font-size: 22px;
+  font-weight: 700;
+  color: #285A8C;
   line-height: 1.25;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
-/* Size/price grid — equal-width 3-column */
+/* Size/price 3-column equal-width grid */
 .pc2-size-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
+
+/* Unselected: white bg, solid blue border, blue text */
 .pc2-size-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 10px 4px;
+  gap: 3px;
+  padding: 10px 6px;
   border-radius: 4px;
-  border: 1px solid #D5DFEA;
-  background: #EEF3F9;
+  border: 1.5px solid #285A8C;
+  background: #FFFFFF;
   color: #285A8C;
   cursor: pointer;
-  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
-  /* stop click bubbling to card handled in JS */
+  transition: background 150ms ease, color 150ms ease;
+}
+.pc2-size-btn:hover:not(.pc2-size-btn--active) {
+  background: #EEF3F9;
 }
 .pc2-size-btn:focus-visible {
   outline: 2px solid #285A8C;
   outline-offset: 2px;
 }
+
+/* Selected: solid blue fill, white text */
 .pc2-size-btn--active {
   background: #285A8C;
   color: #FFFFFF;
   border-color: #285A8C;
 }
+
 .pc2-size-weight {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
 }
 .pc2-size-price {
@@ -606,7 +613,7 @@ img, video { max-width: 100%; display: block; }
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 180ms ease, color 180ms ease;
+  transition: background 180ms ease;
   margin-top: auto;
 }
 .pc2-atc-btn:hover {
@@ -629,9 +636,7 @@ img, video { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* Mobile: full-width card, no max-width cap in a grid */
+/* Mobile: full-width */
 @media (max-width: 480px) {
-  .pc2-card {
-    max-width: 100%;
-  }
+  .pc2-card { max-width: 100%; }
 }
