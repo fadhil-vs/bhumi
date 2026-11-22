@@ -470,25 +470,24 @@ img, video { max-width: 100%; display: block; }
 
 
 /* ============================================================
-   Product Card v2 (pc2-*)
-   Pixel-perfect match to reference screenshot.
+   Product Card v2 (pc2-*)  —  exact match to design reference
    ============================================================ */
 
 /* Card shell */
 .pc2-card {
   background: #FFFFFF;
-  border: 1px solid #D5DFEA;
-  border-radius: 6px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  max-width: 340px;
+  max-width: 100%;
   width: 100%;
-  transition: box-shadow 250ms ease, transform 250ms ease;
+  transition: box-shadow 200ms ease, transform 200ms ease;
 }
 .pc2-card:hover {
-  box-shadow: 0 8px 32px rgba(40, 90, 140, 0.14);
+  box-shadow: 0 6px 24px rgba(40, 90, 140, 0.12);
   transform: translateY(-2px);
 }
 .pc2-card:focus-within {
@@ -496,10 +495,10 @@ img, video { max-width: 100%; display: block; }
   outline-offset: 2px;
 }
 
-/* Image area */
+/* Image — covers full width, fixed height, edge-to-edge */
 .pc2-img-wrap {
   position: relative;
-  height: 300px;
+  height: 220px;
   background: #F4F5F6;
   flex-shrink: 0;
   overflow: hidden;
@@ -509,24 +508,24 @@ img, video { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 400ms ease;
+  transition: transform 350ms ease;
 }
 .pc2-card:hover .pc2-img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-/* POPULAR badge */
+/* POPULAR badge — small, top-left */
 .pc2-popular-tag {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   background: #285A8C;
   color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 3px;
   z-index: 2;
   pointer-events: none;
@@ -534,133 +533,129 @@ img, video { max-width: 100%; display: block; }
 
 /* Body */
 .pc2-body {
-  padding: 14px 16px 16px;
+  padding: 12px 14px 14px;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-/* Title — blue, bold (matches screenshot) */
+/* Title: dark gray, normal weight, 15px — matches reference */
 .pc2-title {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
   color: #1F2937;
-  line-height: 1.3;
-  margin-bottom: 12px;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
 /* Size/price 3-column equal-width grid */
 .pc2-size-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 14px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
-/* Unselected: white bg, solid blue border, blue text */
+/* Unselected: white bg, light gray border, dark gray text */
 .pc2-size-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 10px 6px;
+  gap: 1px;
+  padding: 6px 4px;
   border-radius: 4px;
-  border: 1.5px solid #285A8C;
+  border: 1px solid #D1D5DB;
   background: #FFFFFF;
-  color: #285A8C;
+  color: #374151;
   cursor: pointer;
-  transition: background 150ms ease, color 150ms ease;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 .pc2-size-btn:hover:not(.pc2-size-btn--active) {
-  background: #EEF3F9;
+  border-color: #285A8C;
+  color: #285A8C;
 }
 .pc2-size-btn:focus-visible {
   outline: 2px solid #285A8C;
   outline-offset: 2px;
 }
 
-/* Selected: solid blue fill, white text */
+/* Selected: solid blue */
 .pc2-size-btn--active {
   background: #285A8C;
   color: #FFFFFF;
   border-color: #285A8C;
 }
 
+/* Weight: 12px medium; Price: 12px bold — compact, matches reference */
 .pc2-size-weight {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1.2;
 }
 .pc2-size-price {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
 }
 
-/* Add to Cart button */
+/* Add to Cart button — blue, full width, "Add to cart" text */
 .pc2-atc-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  min-height: 48px;
+  min-height: 42px;
   background: #285A8C;
   color: #FFFFFF;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 180ms ease;
+  transition: background 150ms ease;
   margin-top: auto;
+  letter-spacing: 0.2px;
 }
-.pc2-atc-btn:hover {
-  background: #1B4170;
-}
+.pc2-atc-btn:hover  { background: #1B4170; }
 .pc2-atc-btn:focus-visible {
   outline: 2px solid #285A8C;
   outline-offset: 3px;
 }
-.pc2-atc-btn--added {
-  background: #1E8A4C;
-  color: #FFFFFF;
-}
+.pc2-atc-btn--added { background: #1E8A4C; }
 .pc2-atc-icon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
-.pc2-atc-label {
-  pointer-events: none;
+.pc2-atc-label { pointer-events: none; }
+
+/* ── Responsive ── */
+
+/* Mobile (<= 480px): 2-col grid, compact card */
+@media (max-width: 480px) {
+  .pc2-img-wrap  { height: 150px; }
+  .pc2-body      { padding: 9px 10px 11px; }
+  .pc2-title     { font-size: 13px; font-weight: 400; margin-bottom: 8px; line-height: 1.35; }
+  .pc2-size-grid { gap: 4px; margin-bottom: 8px; }
+  .pc2-size-btn  { padding: 5px 2px; gap: 1px; }
+  .pc2-size-weight { font-size: 11px; font-weight: 500; }
+  .pc2-size-price  { font-size: 11px; font-weight: 700; }
+  .pc2-atc-btn   { min-height: 38px; font-size: 13px; font-weight: 500; gap: 6px; border-radius: 4px; }
+  .pc2-atc-icon  { width: 15px; height: 15px; }
 }
 
-/* Mobile & Responsive */
-@media (max-width: 480px) {
-  .pc2-card         { max-width: 100%; }
-  .pc2-img-wrap     { height: 160px; }
-  /* Compact body — no wasted space */
-  .pc2-body         { padding: 10px 10px 12px; }
-  /* Title: dark, light weight, small — matches reference */
-  .pc2-title        { font-size: 14px; font-weight: 400; color: #1F2937; margin-bottom: 8px; line-height: 1.3; }
-  /* Tight size grid */
-  .pc2-size-grid    { gap: 4px; margin-bottom: 8px; }
-  .pc2-size-btn     { padding: 6px 2px; border-radius: 3px; border-width: 1px; }
-  .pc2-size-weight  { font-size: 12px; font-weight: 600; }
-  .pc2-size-price   { font-size: 11px; font-weight: 700; }
-  /* Compact ATC */
-  .pc2-atc-btn      { min-height: 40px; font-size: 13px; font-weight: 600; gap: 6px; border-radius: 3px; }
-  .pc2-atc-icon     { width: 16px; height: 16px; }
-}
+/* Small tablet (481–767px) */
 @media (min-width: 481px) and (max-width: 767px) {
-  .pc2-card         { max-width: 100%; }
-  .pc2-img-wrap     { height: 200px; }
-  .pc2-body         { padding: 12px 14px 14px; }
-  .pc2-title        { font-size: 16px; font-weight: 400; color: #1F2937; margin-bottom: 10px; }
-  .pc2-atc-btn      { min-height: 44px; font-size: 15px; }
+  .pc2-img-wrap { height: 190px; }
+  .pc2-body     { padding: 11px 13px 13px; }
+  .pc2-title    { font-size: 14px; }
+  .pc2-atc-btn  { min-height: 40px; font-size: 14px; }
 }
+
+/* Tablet (768–1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .pc2-card         { max-width: 100%; }
-  .pc2-img-wrap     { height: 240px; }
+  .pc2-img-wrap { height: 200px; }
+}
 }
