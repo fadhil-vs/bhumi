@@ -3,6 +3,8 @@
  * Product detail image viewer with thumbnails.
  */
 
+import { resolveImageUrl } from '../utils/format.js';
+
 /**
  * @param {Array}  images   - product_images rows sorted by position
  * @param {string} altText  - accessibility alt text
