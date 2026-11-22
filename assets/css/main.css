@@ -636,7 +636,26 @@ img, video { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* Mobile: full-width */
+/* Mobile & Responsive — 2-col mobile layout */
 @media (max-width: 480px) {
-  .pc2-card { max-width: 100%; }
+  .pc2-card         { max-width: 100%; }
+  .pc2-img-wrap     { height: 175px; }
+  .pc2-body         { padding: 12px; }
+  .pc2-title        { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .pc2-size-grid    { gap: 5px; margin-bottom: 10px; }
+  .pc2-size-btn     { padding: 7px 3px; }
+  .pc2-size-weight  { font-size: 13px; }
+  .pc2-size-price   { font-size: 12px; }
+  .pc2-atc-btn      { min-height: 44px; font-size: 14px; gap: 7px; }
+  .pc2-atc-icon     { width: 18px; height: 18px; }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .pc2-card         { max-width: 100%; }
+  .pc2-img-wrap     { height: 210px; }
+  .pc2-body         { padding: 14px; }
+  .pc2-title        { font-size: 17px; margin-bottom: 12px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pc2-card         { max-width: 100%; }
+  .pc2-img-wrap     { height: 240px; }
 }
